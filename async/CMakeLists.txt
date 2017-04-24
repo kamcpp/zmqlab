@@ -4,14 +4,9 @@ add_executable(client
   ${CMAKE_SOURCE_DIR}/client.c
 )
 
-add_executable(worker
-  ${CMAKE_SOURCE_DIR}/worker.c
-)
-
-add_executable(broker
-  ${CMAKE_SOURCE_DIR}/broker.c
+add_executable(server
+  ${CMAKE_SOURCE_DIR}/server.c
 )
 
 target_link_libraries(client zmq)
-target_link_libraries(worker zmq)
-target_link_libraries(broker zmq)
+target_link_libraries(server zmq)
