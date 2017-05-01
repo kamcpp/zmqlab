@@ -6,12 +6,19 @@ if (APPLE)
 endif()
 
 add_executable(client
-  ${CMAKE_SOURCE_DIR}/client.c
+  ${CMAKE_SOURCE_DIR}/client.cc
+  ${CMAKE_SOURCE_DIR}/progress_sync_proxy.cc
+)
+
+add_executable(broker
+  ${CMAKE_SOURCE_DIR}/broker.c
 )
 
 add_executable(server
-  ${CMAKE_SOURCE_DIR}/server.c
+  ${CMAKE_SOURCE_DIR}/progress_service.cc
+  ${CMAKE_SOURCE_DIR}/server.cc
 )
 
 target_link_libraries(client zmq)
+target_link_libraries(broker zmq)
 target_link_libraries(server zmq)

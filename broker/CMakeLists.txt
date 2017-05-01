@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
+if (APPLE)
+  include_directories("/opt/local/include")
+  link_directories("/opt/local/lib")
+endif()
+
 add_executable(client
   ${CMAKE_SOURCE_DIR}/client.c
 )
