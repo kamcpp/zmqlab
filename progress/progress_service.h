@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <memory>
 
 class progress_t;
 class progress_service_t {
