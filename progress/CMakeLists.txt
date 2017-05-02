@@ -13,7 +13,7 @@ add_executable(client
 )
 
 add_executable(broker
-  ${CMAKE_SOURCE_DIR}/broker.c
+  ${CMAKE_SOURCE_DIR}/broker.cc
 )
 
 add_executable(server
