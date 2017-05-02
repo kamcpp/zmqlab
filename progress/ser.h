@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <vector>
 
 #define SER_UINT32(buf, var) \
@@ -29,7 +30,7 @@ struct buf_t {
   ::std::shared_ptr<uchar_t> data;
   uint32_t len;
 
-  buf_t() 
+  buf_t()
     : data(NULL), len(0) {
   }
 
