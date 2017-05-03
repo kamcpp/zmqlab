@@ -14,25 +14,25 @@ progress_sync_proxy_t::~progress_sync_proxy_t() {
 
 uint32_t progress_sync_proxy_t::start_progress() {
   req_t req;
-  req.method = START;
-  req.progress_id = 0;
+  req.method_id = 100;
+  req.int_args.push_back(0);
   const resp_t resp = send(req);
-  return resp.ret_val;
+  return resp.int_values[0];
 }
 
 void progress_sync_proxy_t::reset_progress(const uint32_t id) {
   req_t req;
-  req.method = RESET;
-  req.progress_id = id;
+  req.method_id = 200;
+  req.int_args.push_back(id);
   const resp_t resp = send(req);
 }
 
 uint32_t progress_sync_proxy_t::get_progress(const uint32_t id) {
     req_t req;
-    req.method = GET;
-    req.progress_id = id;
+    req.method_id = 300;
+    req.int_args.push_back(id);
     const resp_t resp = send(req);
-    return resp.ret_val;
+    return resp.int_values[0];
 }
 
 const resp_t progress_sync_proxy_t::send(const req_t req) {

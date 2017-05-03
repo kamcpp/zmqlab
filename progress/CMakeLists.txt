@@ -18,6 +18,7 @@ add_executable(broker
 
 add_executable(server
   ${CMAKE_SOURCE_DIR}/progress_service.cc
+  ${CMAKE_SOURCE_DIR}/service_runtime.cc
   ${CMAKE_SOURCE_DIR}/server.cc
 )
 
