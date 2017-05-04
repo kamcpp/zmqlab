@@ -12,10 +12,10 @@ int main(int argc, char **argv) {
   ::std::cout << "Resetting the progress ... ";
   sync_proxy->reset_progress(id);
   ::std::cout << "done." << id << ::std::endl;
-  uint16_t current_progress = 0;
+  uint32_t current_progress = 0;
   do {
     ::std::cout << "Reading the progress ... ";
-     uint16_t current_progress = sync_proxy->get_progress(id);
+     current_progress = sync_proxy->get_progress(id);
     ::std::cout << "done. Progress is " << current_progress << "%" << ::std::endl;
   } while (current_progress < 100);
   ::std::cout << "Bye." << ::std::endl;

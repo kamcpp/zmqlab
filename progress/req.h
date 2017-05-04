@@ -24,10 +24,10 @@ struct req_t {
 
   void deser(const buf_t buf) {
     uint32_t cntr = 0;
-    DESER_UINT32(buf.data.get(), cntr, id)
-    DESER_UINT32(buf.data.get(), cntr, method_id)
-    DESER_VEC_OF_UINT32(buf.data.get(), cntr, int_args)
-    DESER_VEC_OF_STRING(buf.data.get(), cntr, str_args)
+    DESER_UINT32(buf.data, cntr, id)
+    DESER_UINT32(buf.data, cntr, method_id)
+    DESER_VEC_OF_UINT32(buf.data, cntr, int_args)
+    DESER_VEC_OF_STRING(buf.data, cntr, str_args)
     assert(cntr == buf.len);
   }
 };
