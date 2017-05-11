@@ -1,5 +1,5 @@
 #include "zhelpers.h"
-#include "progress_sync_proxy.h"
+#include "ProgressSyncProxy.h"
 
 ProgressSyncProxy::ProgressSyncProxy()
 {
@@ -19,35 +19,35 @@ uint32_t ProgressSyncProxy::startProgress()
   Req req;
   req.methodId = 100;
   req.intArgs.push_back(0);
-  const Resp resp = Send(req);
+  const Resp resp = send(req);
   return resp.intValues[0];
 }
 
 void ProgressSyncProxy::resetProgress(const uint32_t id)
 {
-  req_t req;
+  Req req;
   req.methodId = 200;
   req.intArgs.push_back(id);
-  const Resp resp = Send(req);
+  const Resp resp = send(req);
 }
 
 uint32_t ProgressSyncProxy::getProgress(const uint32_t id)
 {
-    req_t req;
+    Req req;
     req.methodId = 300;
     req.intArgs.push_back(id);
-    const Resp resp = Send(req);
+    const Resp resp = send(req);
     uint32_t ret = resp.intValues[0];
     return ret;
 }
 
-const resp_t ProgressSyncProxy::send(const req_t req)
+const Resp ProgressSyncProxy::send(const Req req)
 {
   {
-    const Buffer buf = req.Serialize();
+    const Buffer buf = req.serialize();
     zmq_msg_t msg;
     zmq_msg_init_data(&msg, buf.data, buf.len, NULL, NULL);
-    zmq_msg_send(&msg, reqr_, 0);
+    zmq_msg_send(&msg, reqSocket_, 0);
   }
   {
     zmq_msg_t msg;
@@ -57,7 +57,7 @@ const resp_t ProgressSyncProxy::send(const req_t req)
     buf.data = (uchar_t *)zmq_msg_data(&msg);
     buf.len = zmq_msg_size(&msg);
     Resp resp;
-    resp.Deserialize(buf);
+    resp.deserialize(buf);
     return resp;
   }
 }

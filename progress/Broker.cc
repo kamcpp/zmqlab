@@ -6,16 +6,16 @@ int main(int argc, char **argv)
 {
   std::cout << "Starting the broker ..." << std::endl;
   void *context = zmq_ctx_new ();
-  void *frontend = zmq_socket (context, ZMQ_ROUTER);
-  void *backend  = zmq_socket (context, ZMQ_DEALER);
+  void *frontEnd = zmq_socket (context, ZMQ_ROUTER);
+  void *backEnd  = zmq_socket (context, ZMQ_DEALER);
   std::cout << "Binding the ports ... ";
   zmq_bind (frontEnd, "tcp://*:2000");
   zmq_bind (backEnd,  "tcp://*:3000");
   std::cout << "done" << std::endl;
   zmq_pollitem_t items [] =
   {
-    { frontend, 0, ZMQ_POLLIN, 0 },
-    { backend,  0, ZMQ_POLLIN, 0 }
+    { frontEnd, 0, ZMQ_POLLIN, 0 },
+    { backEnd,  0, ZMQ_POLLIN, 0 }
   };
   std::cout << "Loop started." << std::endl;
   while (1)
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
       while (1)
       {
         zmq_msg_init (&message);
-        zmq_msg_recv (&message, frontend, 0);
+        zmq_msg_recv (&message, frontEnd, 0);
         int more = zmq_msg_more (&message);
         zmq_msg_send (&message, backEnd, more? ZMQ_SNDMORE: 0);
         zmq_msg_close (&message);
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
       while (1)
       {
         zmq_msg_init (&message);
-        zmq_msg_recv (&message, backend, 0);
+        zmq_msg_recv (&message, backEnd, 0);
         int more = zmq_msg_more (&message);
         zmq_msg_send (&message, frontEnd, more? ZMQ_SNDMORE: 0);
         zmq_msg_close (&message);

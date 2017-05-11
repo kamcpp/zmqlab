@@ -21,7 +21,7 @@ struct Req
     SER_UINT32(buf, methodId)
     SER_VEC_OF_UINT32(buf, intArgs)
     SER_VEC_OF_STRING(buf, strArgs)
-    return Buffer::FromVector(buf);
+    return Buffer::fromVector(buf);
   }
 
   void deserialize(const Buffer buf)

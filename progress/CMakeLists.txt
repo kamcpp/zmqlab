@@ -8,18 +8,18 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
 
 add_executable(client
-  ${CMAKE_SOURCE_DIR}/client.cc
-  ${CMAKE_SOURCE_DIR}/progress_sync_proxy.cc
+  ${CMAKE_SOURCE_DIR}/Client.cc
+  ${CMAKE_SOURCE_DIR}/ProgressSyncProxy.cc
 )
 
 add_executable(broker
-  ${CMAKE_SOURCE_DIR}/broker.cc
+  ${CMAKE_SOURCE_DIR}/Broker.cc
 )
 
 add_executable(server
-  ${CMAKE_SOURCE_DIR}/progress_service.cc
-  ${CMAKE_SOURCE_DIR}/service_runtime.cc
-  ${CMAKE_SOURCE_DIR}/server.cc
+  ${CMAKE_SOURCE_DIR}/ProgressService.cc
+  ${CMAKE_SOURCE_DIR}/ServiceRuntime.cc
+  ${CMAKE_SOURCE_DIR}/Server.cc
 )
 
 target_link_libraries(client zmq)

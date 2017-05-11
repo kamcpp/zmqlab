@@ -28,23 +28,23 @@ void ServiceRuntime::start()
     buf.data = (uchar_t *)zmq_msg_data(&msg);
     buf.len = zmq_msg_size(&msg);
     Req req;
-    req.deser(buf);
+    req.deserialize(buf);
     if (service_)
     {
       Resp resp = service_->handle(req);
-      send_resp(resp);
+      sendResp(resp);
     }
     else
     {
       Resp resp = Resp();
-      send_resp(resp);
+      sendResp(resp);
     }
   }
 }
 
 void ServiceRuntime::sendResp(Resp resp)
 {
-  const Buffer buf = resp.Serialize();
+  const Buffer buf = resp.serialize();
   zmq_msg_t msg;
   zmq_msg_init_data(&msg, buf.data, buf.len, NULL, NULL);
   zmq_msg_send(&msg, socket_, 0);

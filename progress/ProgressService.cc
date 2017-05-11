@@ -34,7 +34,7 @@ Resp ProgressService::handle(Req req)
     case 200:
     {
       std::cout << "Reset the progress ..." << std::endl;
-      uint32_t id = req.int_args[0];
+      uint32_t id = req.intArgs[0];
       if (pMap_.find(id) == pMap_.end())
       {
         resp.status = 1000;

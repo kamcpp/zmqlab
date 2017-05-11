@@ -23,7 +23,7 @@ struct Resp
     SER_UINT32(buf, status)
     SER_VEC_OF_UINT32(buf, intValues)
     SER_VEC_OF_STRING(buf, strValues)
-    return Buffer::FromVector(buf);
+    return Buffer::fromVector(buf);
   }
 
   void deserialize(const Buffer buf)
