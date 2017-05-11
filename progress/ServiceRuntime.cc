@@ -1,41 +1,50 @@
 #include "zhelpers.h"
-#include "progress_service.h"
-#include "service_runtime.h"
 
-service_runtime_t::service_runtime_t()
-  : service_(nullptr) {
+#include "ProgressService.h"
+#include "ServiceRuntime.h"
+
+ServiceRuntime::ServiceRuntime()
+  : service_(nullptr)
+{
   ctx_ = zmq_ctx_new ();
   socket_ = zmq_socket (ctx_, ZMQ_REP);
 }
 
-service_runtime_t::~service_runtime_t() {
+ServiceRuntime::~ServiceRuntime()
+{
   zmq_close (socket_);
   zmq_ctx_destroy (ctx_);
 }
 
-void service_runtime_t::start() {
+void ServiceRuntime::start()
+{
   zmq_connect (socket_, "tcp://localhost:3000");
-  while (1) {
+  while (1)
+  {
     zmq_msg_t msg;
     zmq_msg_init(&msg);
     zmq_msg_recv(&msg, socket_, 0);
-    buf_t buf;
+    Buffer buf;
     buf.data = (uchar_t *)zmq_msg_data(&msg);
     buf.len = zmq_msg_size(&msg);
-    req_t req;
+    Req req;
     req.deser(buf);
-    if (service_) {
-      resp_t resp = service_->handle(req);
+    if (service_)
+    {
+      Resp resp = service_->handle(req);
       send_resp(resp);
-    } else {
-      resp_t resp = resp_t();
+    }
+    else
+    {
+      Resp resp = Resp();
       send_resp(resp);
     }
   }
 }
 
-void service_runtime_t::send_resp(resp_t resp) {
-  const buf_t buf = resp.ser();
+void ServiceRuntime::sendResp(Resp resp)
+{
+  const Buffer buf = resp.Serialize();
   zmq_msg_t msg;
   zmq_msg_init_data(&msg, buf.data, buf.len, NULL, NULL);
   zmq_msg_send(&msg, socket_, 0);

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "resp.h"
-#include "req.h"
+#include "Resp.h"
+#include "Req.h"
 
-class service_t {
+class Service
+{
 public:
-  virtual resp_t handle(req_t req) = 0;
+  virtual Resp handle(Req req) = 0;
 };

@@ -1,12 +1,14 @@
 #include <iostream>
 
-#include "progress_service.h"
-#include "service_runtime.h"
+#include "ProgressService.h"
+#include "ServiceRuntime.h"
 
-int main(int argc, char **argv) {
-  ::std::shared_ptr<progress_service_t> service(new progress_service_t);
-  ::std::shared_ptr<service_runtime_t> rt(new service_runtime_t);
-  rt->register_service(service);
+int main(int argc, char **argv)
+{
+  std::shared_ptr<ProgressService> service(new ProgressService);
+  std::shared_ptr<ServiceRuntime> rt(new ServiceRuntime);
+  rt->registerService(service);
   rt->start();
+  // TODO: Unregister and perform a clean exit
   return 0;
 }

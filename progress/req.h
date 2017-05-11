@@ -5,29 +5,32 @@
 
 #include <string>
 
-#include "ser.h"
+#include "Ser.h"
 
-struct req_t {
+struct Req
+{
   uint32_t id = 0;
-  uint32_t method_id = 0;
-  ::std::vector<uint32_t> int_args;
-  ::std::vector<::std::string> str_args;
+  uint32_t methodId = 0;
+  std::vector<uint32_t> intArgs;
+  std::vector<::std::string> strArgs;
 
-  const buf_t ser() const {
-    ::std::vector<uchar_t> buf;
+  const Buffer serialize() const
+  {
+    std::vector<uchar_t> buf;
     SER_UINT32(buf, id)
-    SER_UINT32(buf, method_id)
-    SER_VEC_OF_UINT32(buf, int_args)
-    SER_VEC_OF_STRING(buf, str_args)
-    return buf_t::from_vector(buf);
+    SER_UINT32(buf, methodId)
+    SER_VEC_OF_UINT32(buf, intArgs)
+    SER_VEC_OF_STRING(buf, strArgs)
+    return Buffer::FromVector(buf);
   }
 
-  void deser(const buf_t buf) {
+  void deserialize(const Buffer buf)
+  {
     uint32_t cntr = 0;
     DESER_UINT32(buf.data, cntr, id)
-    DESER_UINT32(buf.data, cntr, method_id)
-    DESER_VEC_OF_UINT32(buf.data, cntr, int_args)
-    DESER_VEC_OF_STRING(buf.data, cntr, str_args)
+    DESER_UINT32(buf.data, cntr, methodId)
+    DESER_VEC_OF_UINT32(buf.data, cntr, intArgs)
+    DESER_VEC_OF_STRING(buf.data, cntr, strArgs)
     assert(cntr == buf.len);
   }
 };

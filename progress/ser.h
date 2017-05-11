@@ -102,15 +102,18 @@
 typedef char char_t;
 typedef unsigned char uchar_t;
 
-struct buf_t {
+struct Buffer
+{
   uchar_t *data = nullptr;
   uint32_t len = 0;
 
-  static const buf_t from_vector(::std::vector<uchar_t> vec) {
+  static const buf_t fromVector(::std::vector<uchar_t> vec)
+  {
     buf_t to_ret;
     to_ret.len = vec.size();
     to_ret.data = new uchar_t[to_ret.len];
-    for (uint32_t i = 0; i < to_ret.len; i++) {
+    for (uint32_t i = 0; i < to_ret.len; i++)
+    {
       to_ret.data[i] = vec[i];
     }
     return to_ret;
